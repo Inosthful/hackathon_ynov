@@ -1,2 +1,10 @@
 datasets/dataset_v0.json
 .DS_Store
+
+# Rendu interface web
+rendu/devweb/techcorp-chat/node_modules/
+rendu/devweb/techcorp-chat/.next/
+rendu/devweb/techcorp-chat/.env.local
+
+# macOS
+.DS_Store
