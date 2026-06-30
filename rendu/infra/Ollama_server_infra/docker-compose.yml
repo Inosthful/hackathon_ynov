@@ -1,0 +1,27 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-prod
+    restart: always
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      # Évite que trop de requêtes simultanées ne fassent freeze votre processeur
+      - OLLAMA_NUM_PARALLEL=2
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./Modelfile:/Modelfile:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    deploy:
+      resources:
+        limits:
+          # On laisse un peu de RAM pour Windows (Exemple si vous avez 16 Go au total)
+          memory: 8gb
+        reservations:
+          memory: 4gb
+
+volumes:
+  ollama_data:
+    name: ollama_production_storage
