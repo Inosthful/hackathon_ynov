@@ -41,7 +41,7 @@ L'indicateur en haut à droite passe au **vert** dès qu'Ollama répond.
 Variables d'environnement (créer un fichier `.env.local` à la racine si besoin) :
 
 ```
-OLLAMA_HOST=http://127.0.0.1:11434   # adresse du serveur Ollama
+OLLAMA_HOST=http://10.37.3.158:11434   # adresse du serveur Ollama
 OLLAMA_MODEL=techcorp-financial      # nom du modèle à interroger
 ```
 

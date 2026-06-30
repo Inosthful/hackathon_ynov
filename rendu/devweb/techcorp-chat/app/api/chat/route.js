@@ -6,7 +6,7 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const OLLAMA_HOST = process.env.OLLAMA_HOST || "http://127.0.0.1:11434";
+const OLLAMA_HOST = process.env.OLLAMA_HOST || "http://10.37.3.158:11434";
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "techcorp-financial";
 
 export async function POST(req) {
@@ -30,14 +30,19 @@ export async function POST(req) {
       body: JSON.stringify({ model: OLLAMA_MODEL, messages, stream: true }),
     });
   } catch {
-    return new Response("Serveur Ollama injoignable. Vérifie qu'il tourne sur " + OLLAMA_HOST, {
-      status: 502,
-    });
+    return new Response(
+      "Serveur Ollama injoignable. Vérifie qu'il tourne sur " + OLLAMA_HOST,
+      {
+        status: 502,
+      },
+    );
   }
 
   if (!ollamaRes.ok || !ollamaRes.body) {
     const detail = await ollamaRes.text().catch(() => "");
-    return new Response(`Erreur Ollama (${ollamaRes.status}). ${detail}`, { status: 502 });
+    return new Response(`Erreur Ollama (${ollamaRes.status}). ${detail}`, {
+      status: 502,
+    });
   }
 
   const decoder = new TextDecoder();
@@ -77,6 +82,9 @@ export async function POST(req) {
   });
 
   return new Response(stream, {
-    headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-store",
+    },
   });
 }
